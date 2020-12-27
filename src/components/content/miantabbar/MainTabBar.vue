@@ -1,5 +1,5 @@
 <template>
-  <TabBar>
+  <TabBar class="qwe">
     <tab-bar-item path="/home">
       <template v-slot:itemicon>
         <img src="~assets/img/tabbar/index.png" alt="" />
@@ -47,3 +47,5 @@ export default {
   },
 };
 </script>
+<style  scoped>
+</style>

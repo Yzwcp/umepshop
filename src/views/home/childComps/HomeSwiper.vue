@@ -1,6 +1,6 @@
 <template>
   <div class="block">
-    <el-carousel height="200px" arrow="always">
+    <el-carousel height="200px" arrow="never">
       <el-carousel-item v-for="(item, index) in banners" :key="index">
         <a :href="item.link">
           <img :src="item.image" alt="" />
@@ -23,7 +23,6 @@ export default {
   data() {
     return { interval: 1000 };
   },
-  components: {},
 };
 </script>
 <style scoped>
