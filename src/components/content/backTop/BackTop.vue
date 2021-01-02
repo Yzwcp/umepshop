@@ -1,5 +1,5 @@
 <template>
-  <div class="back-top">
+  <div id="back-top">
     <img src="~assets/img/home/BackTop.svg" alt="" />
   </div>
 </template>
@@ -11,11 +11,12 @@ export default {
 </script>
 
 <style scoped>
-.back-top > img {
-  width: 30px;
-  height: 30px;
+#back-top img {
+  width: 40px;
+  height: 40px;
   position: fixed;
-  bottom: 80px;
+  z-index: 20;
+  bottom: 100px;
   right: 20px;
 }
 </style>

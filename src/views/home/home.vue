@@ -3,6 +3,15 @@
     <NavBar class="home-nav">
       <div slot="center">购物街</div>
     </NavBar>
+    <tab-control
+      class="aaa"
+      ref="refindex2"
+      @settabcontrolindex="settabcontrolindex"
+      :tabmsg="['流行', '新款', '精选']"
+      :class="{ fixed: istabFixed }"
+      v-show="istabFixed"
+      @click.native="backTop"
+    ></tab-control>
     <Scroll
       class="content"
       ref="scroll"
@@ -10,11 +19,12 @@
       @scroll="getY"
       @pullingUp="getpullingUp"
     >
-      <HomeSwiper :banners="banners"></HomeSwiper>
+      <HomeSwiper :banners="banners" @setimgload="getimgload"></HomeSwiper>
       <Recommend :recommends="recommends"></Recommend>
       <Feature></Feature>
       <tab-control
-        ref="refindex"
+        v-show="!istabFixed"
+        ref="refindex1"
         @settabcontrolindex="settabcontrolindex"
         :tabmsg="['流行', '新款', '精选']"
       ></tab-control>
@@ -57,6 +67,8 @@ export default {
       },
       datatype: "pop",
       isShow: false,
+      taboffsetTop: 0,
+      istabFixed: false,
     };
   },
   created() {
@@ -72,11 +84,21 @@ export default {
   },
   mounted() {
     //解决BScroll的bug 当图片加载完后再次计算scroll的高度
+    // const refresh = this.debouce(this.$refs.scroll.scroll.refresh, 200);
     this.$bus.$on("imageload", () => {
       this.$refs.scroll.scroll.refresh();
     });
   },
   methods: {
+    // debouce: function (func, delay) {
+    //   let timer = null;
+    //   return function (...args) {
+    //     if (timer) clearTimeout(timer);
+    //     timer = setTimeout(() => {
+    //       func.apply(this, args);
+    //     }, delay);
+    //   };
+    // }, //防抖
     getHomeGoods(type) {
       const page = this.goods[type].page + 1; //显示当第几页的数据
       getHomeGoods(type, page).then((res) => {
@@ -88,6 +110,9 @@ export default {
     settabcontrolindex(index) {
       const datatype = ["pop", "new", "sell"];
       this.datatype = datatype[index];
+      this.$refs.refindex1.colorIndex = index;
+      this.$refs.refindex2.colorIndex = index;
+
       // console.log(this.$refs.refindex.colorIndex); 父访问子 在tab-control 设置ref='refindex'
     },
     //返回顶部
@@ -100,12 +125,28 @@ export default {
       } else {
         this.isShow = false;
       }
+      const yy = this.taboffsetTop + 44;
+      if (-position.y > yy) {
+        this.istabFixed = true;
+      } else {
+        this.istabFixed = false;
+      }
+    },
+    backTop() {
+      this.$refs.scroll.scroll.scrollTo(0, -this.taboffsetTop - 45, 500);
     },
     // 上拉加载更多
     getpullingUp() {
       this.getHomeGoods(this.datatype);
       this.$refs.scroll.scroll.finishPullUp(); //第一次底部加载完 第二次继续加载
     },
+    //监听swiper图片是否加载完
+    getimgload() {
+      this.taboffsetTop = this.$refs.refindex1.$el.offsetTop;
+    },
+  },
+  activated() {
+    this.$refs.scroll.scroll.refresh();
   },
 };
 </script>
@@ -132,4 +173,7 @@ export default {
   overflow: hidden;
   margin-top: 44px;
 }
+
+/* .fixed {
+} */
 </style>

@@ -36,6 +36,7 @@ export default {
     this.scroll.on("pullingUp", () => {
       this.scroll && this.$emit("pullingUp");
     });
+    //获取taboffsetTop
   },
 };
 </script>

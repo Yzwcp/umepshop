@@ -82,3 +82,14 @@ body {
   vertical-align: middle;
   height: 25px;
 }
+.el-carousel__button {
+  width: 10px !important;
+  height: 10px !important;
+  border-radius: 5px !important;
+}
+.el-carousel__indicators,
+.el-carousel__indicators--horizontal {
+  width: 260px;
+  display: flex;
+  justify-content: center;
+}

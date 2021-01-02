@@ -3,7 +3,7 @@
     <el-carousel height="200px" arrow="never">
       <el-carousel-item v-for="(item, index) in banners" :key="index">
         <a :href="item.link">
-          <img :src="item.image" alt="" />
+          <img :src="item.image" alt="" @load="setimgload" />
         </a>
       </el-carousel-item>
     </el-carousel>
@@ -22,6 +22,11 @@ export default {
   },
   data() {
     return { interval: 1000 };
+  },
+  methods: {
+    setimgload() {
+      this.$emit("setimgload");
+    },
   },
 };
 </script>
