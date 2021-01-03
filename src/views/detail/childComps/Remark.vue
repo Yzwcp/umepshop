@@ -39,9 +39,9 @@ export default {
 
 <style scpoed>
 .remark {
-  height: 200px;
   border-bottom: 3px #f9e9ec solid;
-  margin-bottom: 8px;
+  margin: 8px 0;
+  padding: 0 0 8px 0;
 }
 .remark-title {
   height: 40px;

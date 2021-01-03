@@ -6,7 +6,7 @@
       <img src="~assets/img/home/soucang.svg" alt="" />
     </div>
     <div class="bottom-right">
-      <span class="addshopcat">加入购物车</span>
+      <span class="addshopcat" @click="addCat">加入购物车</span>
       <span class="shopping">购买</span>
     </div>
   </div>
@@ -15,6 +15,11 @@
 <script>
 export default {
   name: "BottomBar",
+  methods: {
+    addCat(){
+      this.$emit('addCat')
+    }
+  },
 };
 </script>
 

@@ -18,7 +18,7 @@ const routes = [{
   component: Fenlei
 }, {
   path: '/shopcar',
-  component: ShopCat
+    component: ShopCat,
 }, {
   path: '/user',
   component: User

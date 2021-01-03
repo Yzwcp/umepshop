@@ -37,7 +37,8 @@
       ></GoodsList>
     </Scroll>
     <BackTop @click.native="backtop" v-show="isShow"></BackTop>
-    <BottomBar></BottomBar>
+    <BottomBar @addCat="addCat"></BottomBar>
+    <Toast :message="message" :show="show"></Toast>
   </div>
 </template>
 
@@ -45,6 +46,7 @@
 import NavBar from "components/common/navbar/NavBar";
 import GoodsList from "components/content/goods/GoodsList";
 import Scroll from "components/common/scroll/Scroll";
+import Toast from "components/common/toast/Toast";
 
 import DetailSwiper from "./childComps/DetailSwiper";
 import DetailInfo from "./childComps/DetailInfo";
@@ -58,6 +60,9 @@ import { getHomeMultidata, getHomeGoods } from "network/home";
 import { debouce } from "common/debouce";
 import { backTopMixin } from "common/mixin";
 import { getdetail, GoodInfo, Shop, ShopParams, Remarks } from "network/detail";
+
+import { mapActions } from "vuex";
+
 export default {
   name: "Detail",
   components: {
@@ -71,6 +76,7 @@ export default {
     Remark,
     GoodsList,
     BottomBar,
+    Toast,
   },
   mixins: [backTopMixin],
   data() {
@@ -96,6 +102,9 @@ export default {
       GotoPlace: [],
       GetTabY: null,
       currentindex: 0,
+      istipshow: false,
+      message: "",
+      show: false,
     };
   },
   created() {
@@ -121,7 +130,7 @@ export default {
       );
       //获取评价数据
       this.Remarks = new Remarks(
-        res.data.result.rate && res.data.result.rate.list[0]
+        res.data.result.rate.list && res.data.result.rate.list[0]
       );
     });
     this.getHomeGoods("pop");
@@ -149,6 +158,8 @@ export default {
     // });
   },
   methods: {
+    ...mapActions(["addCart"]),
+
     getHomeGoods(type) {
       const page = this.goods[type].page + 1; //显示当第几页的数据
       getHomeGoods(type, page).then((res) => {
@@ -190,6 +201,27 @@ export default {
       } else {
         this.isShow = false;
       }
+    },
+    addCat() {
+      var playload = {};
+      playload.iid = this.iid;
+      playload.image = this.topImages[0];
+      playload.title = this.goodInfo.title;
+      playload.desc = this.goodInfo.desc;
+      playload.price = this.goodInfo.realPrice;
+      playload.count = 1;
+      playload.checked = false;
+      // this.$store.commit("addCart", playload);
+      // this.$store.dispatch("addCart", playload).then((res) => console.log(res));
+      //映射后的函数
+      this.addCart(playload).then((res) => {
+        this.show = true;
+        this.message = res;
+        setTimeout(() => {
+          this.show = false;
+        }, 1000);
+      });
+      //加入购物车提示成功信息
     },
   },
   filters: {
