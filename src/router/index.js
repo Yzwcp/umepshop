@@ -3,7 +3,7 @@ import Vue from 'vue'
 const Home = () => import('views/home/home')
 const Fenlei = () => import('views/fenlei/fenlei')
 const ShopCat = () => import('views/shopcar/shopcar')
-const User = () => import('views/user/user')
+const User = () => import('views/profile/Profile')
 const Detail = () => import('views/detail/Detail')
 
 Vue.use(VueRouter)
