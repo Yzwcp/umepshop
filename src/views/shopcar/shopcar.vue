@@ -1,7 +1,7 @@
 <template>
   <div id="shopcar">
     <NavBar class="shopcar-navbar">
-      <div slot="center">购物车({{ shopCartsLength }})</div>
+      <div slot="center">购物车{{ shopCartsLength }}</div>
     </NavBar>
 
     <ShopItem :shopCars="shopCars"></ShopItem>

@@ -4,7 +4,7 @@
       <li
         v-for="(item, index) in categoryList[0]"
         :key="index"
-        @click="isColor(index, item.maitKey)"
+        @click="isColor(index, item)"
         :class="{ active: index == isColorIndex }"
       >
         {{ item.title }}
@@ -30,9 +30,9 @@ export default {
     };
   },
   methods: {
-    isColor(index, maitKey) {
+    isColor(index, item) {
       this.isColorIndex = index;
-      this.$emit("setmaitKey", maitKey);
+      this.$emit("setmaitKey", item);
     },
   },
 };

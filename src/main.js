@@ -5,13 +5,14 @@ import ElementUI from 'element-ui';
 import store from './store'
 import VueLazyLoad from 'vue-lazyload'
 import 'element-ui/lib/theme-chalk/index.css';
+import WaterfallEasy from 'vue-waterfall-easy'
 Vue.config.productionTip = false
 Vue.use(ElementUI);
 // Vue.use(VueLazyLoad)
 Vue.use(VueLazyLoad, {
-  loading:require('./assets/img/home/zhanwei.png')
+  loading:require('./assets/img/home/loading.png')
 })
-
+Vue.use(WaterfallEasy)
 Vue.prototype.$bus = new Vue()
 
 /* eslint-disable no-new */

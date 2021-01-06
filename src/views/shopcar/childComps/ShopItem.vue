@@ -48,10 +48,9 @@
         全选
       </span>
       <span
-        >合计<span class="price">{{ shopCartsTotal }}</span
-        >¥</span
-      >
-      <span>去计算{{ shopCartsCount }}</span>
+        >合计<span class="price">{{ shopCartsTotal }} </span>
+      </span>
+      <span>去计算{{ shopCartsCount }}元</span>
     </div>
   </div>
 </template>
@@ -149,7 +148,7 @@ export default {
 .price {
   font-size: 16px;
   color: var(--color-tint);
-  padding: 0 2px;
+  padding: 0 4px;
 }
 .desc {
   font-size: 14px;

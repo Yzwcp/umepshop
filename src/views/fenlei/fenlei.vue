@@ -10,20 +10,22 @@
           :categoryList="categoryList"
         ></SideTab>
       </Scroll>
-      <Scroll class="contentright">
+      <Scroll class="contentright" ref="right">
         <SideRight
           class="cgright"
           :getRightCategoryList="getRightCategoryList"
         ></SideRight>
+        <GoodsList :goods="categoryDetailList.data"></GoodsList>
       </Scroll>
     </div>
   </div>
 </template>
 <script>
-import { LeftMainBar, getRightCategory } from "network/fenlei";
+import { LeftMainBar, getRightCategory, getRightDetail } from "network/fenlei";
 
 import NavBar from "components/common/navbar/NavBar";
 import Scroll from "components/common/scroll/Scroll";
+import GoodsList from "components/content/goods/GoodsList";
 
 import SideTab from "./childComps/SideTab";
 import SideRight from "./childComps/SideRight";
@@ -34,26 +36,36 @@ export default {
       categoryList: [],
       getRightCategoryList: {},
       maitKey: "3627",
+      miniWallkey: "10062603",
+      categoryDetailList: {},
     };
   },
-  components: { SideTab, NavBar, Scroll, SideRight },
+  components: { SideTab, NavBar, Scroll, SideRight, GoodsList },
   created() {
     LeftMainBar().then((res) => {
       this.categoryList.push(res.data.data.category.list);
-      console.log(res);
     });
     this._getRightCategory();
+    this._getRightDetail();
   },
   methods: {
     _getRightCategory() {
       getRightCategory(this.maitKey).then((res) => {
         this.getRightCategoryList = res.data.data;
-        console.log(res.data.data);
       });
     },
-    getmaitKey(maitKey) {
-      this.maitKey = maitKey;
+    _getRightDetail() {
+      getRightDetail(this.miniWallkey).then((res) => {
+        this.categoryDetailList = res;
+      });
+    },
+    getmaitKey(item) {
+      this.maitKey = item.maitKey;
+      this.miniWallkey = item.miniWallkey;
+      console.log(item.maitKey);
       this._getRightCategory();
+      this._getRightDetail();
+      this.$refs.right.scroll.scrollTo(0, 0, 500);
     },
   },
 };
